@@ -376,6 +376,15 @@ class Union implements TypeNode
             $types[] = strval($type->getId());
         }
         sort($types);
+
+        if (\count($types) > 1) {
+            foreach ($types as $i => $type) {
+                if (strpos($type, ' as ') && strpos($type, '(') === false) {
+                    $types[$i] = '(' . $type . ')';
+                }
+            }
+        }
+
         $id = implode('|', $types);
 
         $this->id = $id;
